@@ -1,3 +1,44 @@
-:host {
-  
+.container {
+    display: grid;
+    grid-template-rows: 34px auto auto;
+
+    header {
+        background: #3a3a3a;
+        display: grid;
+        padding: 8px;
+        grid-template-columns: 85% auto;
+
+        strong {
+            -webkit-app-region: drag;
+            color: #fff;
+        }
+        nav {
+            justify-self: right;
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                li {
+                    float: left;
+                    margin-left: 8px;
+                    img {
+                        width: 12px;
+                        cursor: pointer;
+                    }
+                    img#min {
+                        padding: 10px;
+                    }
+                }
+            }
+        }
+    }
+    main {
+        background: #c0c0c0;
+        text-align: center;
+        padding: 10px;
+        canvas {
+            max-width: 85vw;
+            max-height: 85vh;
+        }
+    }
 }
