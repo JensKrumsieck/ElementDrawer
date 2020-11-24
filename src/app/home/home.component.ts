@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { stat } from 'fs';
 import { ElectronService } from '../core/services/electron/electron.service';
 import { ElementDataService } from '../element-data.service';
-
 
 class ChemicalElement {
   Symbol: string;
