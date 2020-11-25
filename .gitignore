@@ -1,6 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 #image output
 /images
+
+#settinfs
+settings.json
+
 # compiled output
 /dist
 /tmp

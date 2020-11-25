@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { fstat } from 'fs';
-import { threadId } from 'worker_threads';
 import { ElectronService } from '../core/services/electron/electron.service';
 import { ElementDataService } from '../element-data.service';
 
@@ -40,18 +38,50 @@ export class HomeComponent implements OnInit {
     this.elements = new Array();
     this.ctx = this.canvas.nativeElement.getContext('2d');
     //read in elemental data
-    //TODO: read settings
     this.readData();
-    ///Default Values
-    this.font = "Arial";
-    this.color = "#ffffff";
-    this.background = "#000000";
-    this.symbolSize = 1000;
-    this.elementNameSize = 250;
-    this.numberSize = 250;
-    this.weightSize = 200;
+
+    this.readSettings();
     //refresh preview
     this.onChange(1);
+  }
+
+  readSettings() {
+    var file = `${this.electron.remote.app.getAppPath()}/settings.json`;
+    if (this.electron.fs.existsSync(file)) {
+      var data = this.electron.fs.readFileSync(file);
+      var json = JSON.parse(data.toString());
+      this.font = json.font;
+      this.color = json.color;
+      this.background = json.background;
+      this.symbolSize = json.symbolSize;
+      this.elementNameSize = json.elementNameSize;
+      this.numberSize = json.numberSize;
+      this.weightSize = json.weightSize;
+    }
+    else {
+      this.font = "Arial";
+      this.color = "#ffffff";
+      this.background = "#000000";
+      this.symbolSize = 1000;
+      this.elementNameSize = 250;
+      this.numberSize = 250;
+      this.weightSize = 200;
+    }
+  }
+
+  saveSettings() {
+    var file = `${this.electron.remote.app.getAppPath()}/settings.json`;
+    let settings = {
+      font: this.font,
+      color: this.color,
+      background: this.background,
+      symbolSize: this.symbolSize,
+      elementNameSize: this.elementNameSize,
+      numberSize: this.numberSize,
+      weightSize: this.weightSize
+    };
+    var content = JSON.stringify(settings);
+    this.electron.fs.writeFileSync(file, content);
   }
 
   closeWindow() {
@@ -65,16 +95,20 @@ export class HomeComponent implements OnInit {
   onChange(index: number) {
     this.current = this.elements[index - 1];
     this.drawCurrent();
+    this.saveSettings();
   }
 
   drawCurrent() {
     this.draw(this.current)
   }
+
   draw(element: ChemicalElement) {
+    //build fonts
     var fontTitle = `${this.elementNameSize}px ${this.font}`;
     var fontSymbol = `bold ${this.symbolSize}px ${this.font}`;
     var fontNumber = `${this.numberSize}px ${this.font}`;
     var fontWeight = `${this.weightSize}px ${this.font}`;
+
     var width = this.canvas.nativeElement.width;
     var height = this.canvas.nativeElement.height;
 
@@ -112,7 +146,7 @@ export class HomeComponent implements OnInit {
   }
 
   save() {
-    const dir = `${this.electron.remote.app.getAppPath()}/images`;
+    var dir = `${this.electron.remote.app.getAppPath()}/images`;
     if (!this.electron.fs.existsSync(dir)) {
       this.electron.fs.mkdirSync(dir)
     }
@@ -123,6 +157,8 @@ export class HomeComponent implements OnInit {
       var buffer = Buffer.from(data, 'base64');
       this.electron.fs.writeFileSync(`${dir}/${item.Symbol}.png`, buffer);
     });
+
+    this.saveSettings();
   }
 
   readData() {
