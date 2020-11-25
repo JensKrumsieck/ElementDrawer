@@ -95,11 +95,11 @@ export class HomeComponent implements OnInit {
   onChange(index: number) {
     this.current = this.elements[index - 1];
     this.drawCurrent();
-    this.saveSettings();
   }
 
   drawCurrent() {
     this.draw(this.current)
+    this.saveSettings();
   }
 
   draw(element: ChemicalElement) {
