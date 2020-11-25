@@ -12,11 +12,68 @@
       </ul>
     </nav>
   </header>
-  <select name="preview" (change)="onChange($event.target.value)">
-    <option *ngFor="let element of elements" [value]="element.Index">
-      {{element.Symbol}} - {{element.Name}}</option>
-  </select>
-  <main>
-    <canvas #preview width="1920" height="1920"></canvas>
-  </main>
+
+  <div class="main">
+    <div class="formElement">
+      <label for="preview">Preview</label>
+      <select id="preview" name="preview" (change)="onChange($event.target.value)">
+        <option *ngFor="let element of elements" [value]="element.Index">
+          {{element.Symbol}} - {{element.Name}}</option>
+      </select>
+    </div>
+
+    <div class="formElement">
+      <label for="font">Font</label>
+      <input id="font" placeholder="Enter Font Name" [ngModel]="font" (ngModelChange)="font = $event" name="Font"
+        type="text" (keyup.enter)="drawCurrent()" />
+    </div>
+
+    <div class="formElement">
+      <label for="color">Foreground Color</label>
+      <input id="color" placeholder="Enter Color (Hex)" [ngModel]="color" (ngModelChange)="color = $event" name="Color"
+        type="text" (keyup.enter)="drawCurrent()" />
+    </div>
+
+    <div class="formElement">
+      <label for="background">Background Color</label>
+      <input id="background" placeholder="Enter Color (Hex)" [ngModel]="background"
+        (ngModelChange)="background = $event" name="background" type="text" (keyup.enter)="drawCurrent()" />
+    </div>
+
+    <hr />
+
+    <div class="formElement">
+      <label for="symbolSize">Fontsize: Symbol [px]</label>
+      <input id="symbolSize" placeholder="Enter size in pixels" [ngModel]="symbolSize"
+        (ngModelChange)="symbolSize = $event" name="symbolSize" type="number" (change)="drawCurrent()" />
+    </div>
+
+    <div class="formElement">
+      <label for="elementNameSize">Fontsize: Element name [px]</label>
+      <input id="elementNameSize" placeholder="Enter size in pixels" [ngModel]="elementNameSize"
+        (ngModelChange)="elementNameSize = $event" name="symbolSize" type="number" (change)="drawCurrent()" />
+    </div>
+
+    <div class="formElement">
+      <label for="elementNameSize">Fontsize: Element name [px]</label>
+      <input id="elementNameSize" placeholder="Enter size in pixels" [ngModel]="elementNameSize"
+        (ngModelChange)="elementNameSize = $event" name="elementNameSize" type="number" (change)="drawCurrent()" />
+    </div>
+
+    <div class="formElement">
+      <label for="weightSize">Fontsize: Weight [px]</label>
+      <input id="weightSize" placeholder="Enter size in pixels" [ngModel]="weightSize"
+        (ngModelChange)="weightSize = $event" name="weightSize" type="number" (change)="drawCurrent()" />
+    </div>
+
+    <hr />
+
+    <button (click)="save()">
+      Save
+    </button>
+
+    <main>
+      <canvas #preview width="1920" height="1920"></canvas>
+    </main>
+  </div>
 </div>

@@ -1,12 +1,16 @@
 .container {
     display: grid;
-    grid-template-rows: 34px auto auto;
+    grid-template-rows: 34px auto;
+    width: 100%;
 
     header {
         background: #3a3a3a;
         display: grid;
         padding: 8px;
         grid-template-columns: 85% auto;
+        position: fixed;
+        right: 0;
+        left: 0;
 
         strong {
             -webkit-app-region: drag;
@@ -32,13 +36,34 @@
             }
         }
     }
-    main {
-        background: #c0c0c0;
-        text-align: center;
-        padding: 10px;
-        canvas {
-            max-width: 85vw;
-            max-height: 85vh;
+    .main {
+        margin-top: 34px;
+        main {
+            background: #c0c0c0;
+            text-align: center;
+            overflow-y: scroll;
+            height: 100vh;
+            padding: 10px;
+            canvas {
+                max-width: 75%;
+                max-height: 75%;
+            }
+        }
+        .formElement {
+            display: inline-grid;
+            margin: 8px;
+            label {
+                font-size: 0.85rem;
+                color: gray;
+            }
+            input,
+            select {
+                background-color: #dbdbdb;
+                border: 0;
+                padding: 12px;
+                color: gray;
+                outline: none;
+            }
         }
     }
 }
