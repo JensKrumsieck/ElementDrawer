@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit {
 
     //draw border
     this.ctx.strokeStyle = this.color;
-    this.ctx.lineWidth = 100;
+    this.ctx.lineWidth = 50;
     this.ctx.strokeRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height)
     this.ctx.fillStyle = this.color;
 
